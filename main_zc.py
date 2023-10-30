@@ -3,7 +3,8 @@ from base_log import llog
 from transformers import AutoTokenizer, AutoModel
 
 tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm3-6b", trust_remote_code=True)
-model = AutoModel.from_pretrained("THUDM/chatglm3-6b", trust_remote_code=True, device='cuda')
+model = AutoModel.from_pretrained("THUDM/chatglm3-6b", trust_remote_code=True).cuda()
+# model = AutoModel.from_pretrained("THUDM/chatglm3-6b", trust_remote_code=True, device='cuda')
 model = model.eval()
 
 
@@ -23,11 +24,11 @@ def csvParse(path: str):
 
 
 def parse_answer(text) -> str:
-    text = f'你是游戏公司客服,下面是用户发出来的一些聊天和自定义昵称。"{text}"。这句话是否存在侮辱倾向？只用回答选项，不要有多余答案\nA.是 B.不是'
+    text = f'你是游戏公司客服,下面是用户发出来的一些聊天和自定义昵称。语句为："{text}"。这句话是否为侮辱倾向言语？只用回答选项，不要有多余答案\nA.是 B.不是'
     response, history = model.chat(tokenizer, text,
                                    max_length=2048,
                                    top_p=0.7,
-                                   temperature=0.3,
+                                   temperature=0.7,
                                    history=[])
     llog.info(f'{text}\n结论{response}')
     return response
