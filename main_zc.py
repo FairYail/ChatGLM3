@@ -22,7 +22,7 @@ def csvParse(path: str):
 
 
 def parse_answer(text) -> str:
-    text = f'你是游戏公司客服,下面是用户发出来的一些聊天和自定义昵称。语句为："{text}"。这句话是否为侮辱、辱骂言语？\nA.是侮辱 B.不是侮辱'
+    text = f'你是游戏公司客服,下面是用户发出来的一些聊天和自定义昵称。语句为："{text}"。这句话是否为侮辱、辱骂言语？选择下面选项，再分析原因\nA.是侮辱 B.不是侮辱'
     response, history = model.chat(tokenizer, text,
                                    max_length=2048,
                                    top_p=0.8,
