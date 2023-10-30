@@ -2,10 +2,11 @@ import pandas as pd
 from base_log import llog
 from transformers import AutoTokenizer, AutoModel
 
-tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm3-6b", trust_remote_code=True)
-model = AutoModel.from_pretrained("THUDM/chatglm3-6b", trust_remote_code=True).cuda()
-# model = AutoModel.from_pretrained("THUDM/chatglm3-6b", trust_remote_code=True, device='cuda')
-model = model.eval()
+
+# tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm3-6b", trust_remote_code=True)
+# model = AutoModel.from_pretrained("THUDM/chatglm3-6b", trust_remote_code=True).cuda()
+# # model = AutoModel.from_pretrained("THUDM/chatglm3-6b", trust_remote_code=True, device='cuda')
+# model = model.eval()
 
 
 # 解析csv
@@ -15,21 +16,22 @@ def csvParse(path: str):
 
     # 存储每一行的数据
     all_rows_data = df.values.tolist()
-    csv_data = []
+    csv_data = [["文本", "来源", "uId", "结果"]]
     for row in all_rows_data:
         csv_data.append(row)
     return csv_data
 
 
 def parse_answer(text) -> str:
-    text = f'你是游戏公司客服,下面是用户发出来的一些聊天和自定义昵称。语句为："{text}"。这句话是否为侮辱、辱骂言语？只用回答选项，不要有多余答案\nA.是侮辱 B.不是侮辱'
-    response, history = model.chat(tokenizer, text,
-                                   max_length=2048,
-                                   top_p=0.8,
-                                   temperature=0.2,
-                                   history=[])
-    llog.info(f'{text}\n结论{response}')
-    return response
+    # text = f'你是游戏公司客服,下面是用户发出来的一些聊天和自定义昵称。语句为："{text}"。这句话是否为侮辱、辱骂言语？只用回答选项，不要有多余答案\nA.是侮辱 B.不是侮辱'
+    # response, history = model.chat(tokenizer, text,
+    #                                max_length=2048,
+    #                                top_p=0.8,
+    #                                temperature=0.2,
+    #                                history=[])
+    # llog.info(f'{text}\n结论{response}')
+    # return response
+    return ""
 
 
 if __name__ == '__main__':
