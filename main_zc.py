@@ -56,9 +56,9 @@ if __name__ == '__main__':
         result = parse_answer(single_val[0])
         # 判断result是否包含英文字母A
         if result.find("A") != -1:
-            single_val.append("是")
+            single_val.append("通过")
         elif result.find("B") != -1:
-            single_val.append("否")
+            single_val.append("不通过")
         else:
             single_val.append("未知")
         csv_data.append(single_val)
