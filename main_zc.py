@@ -23,6 +23,7 @@ def csvParse(path: str):
 
 
 def parse_answer(text):
+    text = f'你是游戏公司客服,下面是用户发出来的一些聊天和自定义昵称。"{text}"。这句话是否存在侮辱倾向？\n A.是 B.不是'
     response, history = model.chat(tokenizer, text, history=[])
     llog.info(f'{text},结论{response}')
 
