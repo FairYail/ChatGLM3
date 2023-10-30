@@ -65,5 +65,5 @@ if __name__ == '__main__':
     # 写入csv
     csv_df = pd.DataFrame(csv_data)
     # 保存为CSV文件
-    csv_filename = 'zc_glm.csv'  # 文件名
+    csv_filename = 'zc_glm2.csv'  # 文件名
     csv_df.to_csv(csv_filename, index=False)  # index=False 表示不保存行索引
