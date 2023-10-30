@@ -22,10 +22,11 @@ def csvParse(path: str):
     return csv_data
 
 
-def parse_answer(text):
+def parse_answer(text) -> str:
     text = f'你是游戏公司客服,下面是用户发出来的一些聊天和自定义昵称。"{text}"。这句话是否存在侮辱倾向？A.是 B.不是，只用回答选项，不要有多余答案'
     response, history = model.chat(tokenizer, text, history=[])
     llog.info(f'{text},结论{response}')
+    return response
 
 
 if __name__ == '__main__':
@@ -46,4 +47,18 @@ if __name__ == '__main__':
         single_val = []
         for val in data:
             single_val.append(val)
-        parse_answer(single_val[0])
+        result = parse_answer(single_val[0])
+        # 判断result是否包含英文字母A
+        if result.find("A") != -1:
+            single_val.append("是")
+        elif result.find("B") != -1:
+            single_val.append("否")
+        else:
+            single_val.append("未知")
+        csv_data.append(single_val)
+
+    # 写入csv
+    df = pd.DataFrame(csv_data)
+    # 保存为CSV文件
+    csv_filename = 'zc_glm.csv'  # 文件名
+    df.to_csv(csv_filename, index=False)  # index=False 表示不保存行索引
