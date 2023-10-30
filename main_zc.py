@@ -24,7 +24,11 @@ def csvParse(path: str):
 
 def parse_answer(text) -> str:
     text = f'你是游戏公司客服,下面是用户发出来的一些聊天和自定义昵称。"{text}"。这句话是否存在侮辱倾向？\nA.是 B.不是'
-    response, history = model.chat(tokenizer, text, history=[])
+    response, history = model.chat(tokenizer, text,
+                                   max_length=8192,
+                                   top_p=0.8,
+                                   temperature=0.6,
+                                   history=[])
     llog.info(f'{text},结论{response}')
     return response
 
@@ -41,6 +45,7 @@ if __name__ == '__main__':
                 single_val.append(val)
             single_val.append("GLM结果")
             isFirst = False
+            csv_data.append(single_val)
             continue
 
         # 第二行开始
