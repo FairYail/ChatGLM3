@@ -22,15 +22,13 @@ def csvParse(path: str):
 
 
 def parse_answer(text) -> str:
-    text = f'你是游戏公司客服,下面是用户发出来的一些聊天和自定义昵称。语句为："{text}"。这句话是否为侮辱、辱骂言语？只用回答选项，不要有多余答案\nA.是侮辱 B.不是侮辱'
+    text = f'你是游戏公司客服,下面是用户发出来的一些聊天和自定义昵称。语句为："{text}"。这句话是否为侮辱、辱骂言语？只用回答选项\nA.是侮辱 B.不是侮辱'
     response, history = model.chat(tokenizer, text,
                                    max_length=2048,
                                    top_p=0.8,
-                                   temperature=0.2,
+                                   temperature=0.3,
                                    history=[])
     llog.info(f'{text}\n结论{response}')
-    return response
-    # return ""
 
 
 if __name__ == '__main__':
@@ -60,10 +58,11 @@ if __name__ == '__main__':
             single_val.append("不通过")
         else:
             single_val.append("未知")
+        single_val.append(result)
         csv_data.append(single_val)
 
     # 写入csv
-    df = pd.DataFrame(csv_data)
+    csv_df = pd.DataFrame(csv_data)
     # 保存为CSV文件
     csv_filename = 'zc_glm.csv'  # 文件名
-    df.to_csv(csv_filename, index=False)  # index=False 表示不保存行索引
+    csv_df.to_csv(csv_filename, index=False)  # index=False 表示不保存行索引
