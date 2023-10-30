@@ -26,7 +26,7 @@ def parse_answer(text) -> str:
     response, history = model.chat(tokenizer, text,
                                    max_length=2048,
                                    top_p=0.8,
-                                   temperature=0.6,
+                                   temperature=0.2,
                                    history=[])
     llog.info(f'{text}\n结论{response}')
     return response
@@ -64,5 +64,5 @@ if __name__ == '__main__':
     # 写入csv
     df = pd.DataFrame(csv_data)
     # 保存为CSV文件
-    csv_filename = 'zc_glm.csv'  # 文件名
+    csv_filename = 'zc_glm_2.csv'  # 文件名
     df.to_csv(csv_filename, index=False)  # index=False 表示不保存行索引
