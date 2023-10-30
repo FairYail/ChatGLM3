@@ -26,7 +26,7 @@ def parse_answer(text) -> str:
     response, history = model.chat(tokenizer, text,
                                    max_length=2048,
                                    top_p=0.8,
-                                   temperature=0.3,
+                                   temperature=0.6,
                                    history=[])
     llog.info(f'{text}\n结论{response}')
     return response
