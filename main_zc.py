@@ -29,6 +29,7 @@ def parse_answer(text) -> str:
                                    temperature=0.3,
                                    history=[])
     llog.info(f'{text}\n结论{response}')
+    return response
 
 
 if __name__ == '__main__':
