@@ -11,9 +11,7 @@ model = model.eval()
 # 解析csv
 def csvParse(path: str):
     # 读取指定工作表和列的 Excel 文件
-    df = pd.read_csv(path)
-    # 处理可能的 NaN 值
-    df = df.fillna('')
+    df = pd.read_csv(path).fillna('')
 
     # 存储每一行的数据
     all_rows_data = df.values.tolist()
@@ -24,7 +22,7 @@ def csvParse(path: str):
 
 
 def parse_answer(text) -> str:
-    text = f'你是游戏公司客服,下面是用户发出来的一些聊天和自定义昵称。语句为："{text}"。这句话是否为侮辱倾向言语？只用回答选项，不要有多余答案\nA.是 B.不是'
+    text = f'你是游戏公司客服,下面是用户发出来的一些聊天和自定义昵称。语句为："{text}"。这句话是否为侮辱、辱骂言语？只用回答选项，不要有多余答案\nA.是侮辱 B.不是侮辱'
     response, history = model.chat(tokenizer, text,
                                    max_length=2048,
                                    top_p=0.8,
